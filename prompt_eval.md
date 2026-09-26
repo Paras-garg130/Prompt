@@ -1,143 +1,221 @@
-# Prompt Evaluation Report
+# AI Prompt Evaluation Report
 
-## Overall Score
+## 1. Overall Score
 
-| Parameter | Score |
-|---|---:|
-| Prompt Clarity | 80 / 100 |
-| Output Quality | 39 / 100 |
-| Efficiency | 30 / 50 |
-| **Total** | **149 / 250** |
+| Parameter | Maximum Marks | Awarded Marks | Percentage | Grade |
+|---|---:|---:|---:|---|
+| **Prompt Clarity** | 100 | 94 | 94% | A |
+| **Output Quality** | 100 | 85 | 85% | B+ |
+| **Efficiency** | 50 | 41 | 82% | B |
+| **Total Score** | **250** | **220** | **88%** | **A-** |
 
-## Executive Summary
+## 2. Executive Summary
 
-The prompt has a memorable business scenario, clear phase boundaries, concrete product cost anchors, and a useful set of requested deliverables. It should reliably produce an energetic, structured business plan. Its weakest point is financial reproducibility: selling prices and inventory quantities are unconstrained, “margin” is undefined, and profit-based reinvestment is requested without specifying sales, expenses, or accounting assumptions. It also omits food-safety and local-compliance guardrails and provides no fallback for infeasible timing or throughput assumptions. The rewrite below retains the concept while requiring auditable calculations and explicitly labeled assumptions.
+- **Verdict:** A strong, production-oriented prompt with unusually good financial reconciliation and anti-hallucination controls. It is ready for practical use after small additions for demonstrations, input validation, and food-service safety.
+- **Target evaluated:** `project_canteen_cult_prompt_optimized.md`. The requested `project_canteen_cult_optimized.md` filename was not present; this was the matching optimized file in the workspace.
+- **Estimated length:** approximately 1,900 tokens, tokenizer-dependent; 7,991 characters across 91 lines.
+- **Strengths:**
+  - Separates personas, variables, grounding rules, tasks, edge cases, style, and final validation with clear XML-like delimiters.
+  - Makes the budget auditable through quantities, unit costs, fund allocation, a margin formula, assumptions, and reconciliation behavior.
+  - Blocks invented numbers, fake scarcity, silent input changes, and unsupported certainty.
+- **Key vulnerabilities / deficits:**
+  - It has one style example, but no complete input/output demonstration or worked edge-case example.
+  - Several inputs are validated in prose but lack a universal invalid-input response, especially negative prices, non-integer quantities, and malformed product objects.
+  - The prompt repeats some constraints across `<grounding_rules>`, `<edge_cases>`, and `<final_check>`.
 
-## Evaluated Prompt Analysis
+## 3. Evaluated Prompt Analysis
 
-**Source:** `project_canteen_cult_prompt(1).md`  
-**Estimated length:** approximately 400 tokens (rough estimate; tokenizer-dependent).  
-**Structure:** A scenario-setting directive, four persona-led phases, embedded product and cost assumptions, phase-specific deliverables, and a final style rule. It contains no variable placeholders or example outputs.
+### Structural overview
 
-### Prompt Text Evaluated
+The prompt contains six instruction blocks: persona ownership, parameterized variables, grounding rules, four ordered phases, edge cases, style constraints, and a final consistency check. It requests menu design, auditable micro-economics, queue operations, and a seven-day roadmap.
 
-> **System Directive:** Activate "Project Canteen Cult." You will execute a comprehensive 4-phase strategy to flip the standard college canteen into a high-profit, viral sensation within exactly 7 days, using a strict ₹10,000 micro-budget.
->
-> Follow the strict phase-by-phase persona mapping and constraints below.
->
-> ### PHASE 1: The "Drop Culture" Scarcity Menu (Adopt Persona: Viral Street-Food Chef)
-> Design an ultra-fast prep menu limited to exactly 3 killer items targeted at stressed tech and AI students.
-> * **Item 1:** A signature loaded Chilli Potato bowl. (Assume ₹20 raw cost)
-> * **Item 2:** A handheld Paneer Dosa fusion wrap. (Assume ₹30 raw cost)
-> * **Item 3:** An artisanal iced mocktail/coffee. (Assume ₹15 raw cost)
-> * **Deliverable:** For each item, provide a Catchy Name, Core Ingredients, Prep Time (must be under 3 minutes assuming a 2-person prep team), and the psychological hook (why students will crave it).
->
-> ### PHASE 2: The ₹10,000 Micro-Economy (Adopt Persona: Ruthless Startup CFO)
-> * **The Day 1 Budget (Markdown Table):** Allocate exactly ₹8,000 to initial stock and ₹2,000 for a "Hype Fund." Use the anchor raw costs provided in Phase 1.
-> * **Required Columns:** Item/Expense | Raw Cost per Unit (₹) | Selling Price (₹) | Margin (%) | Daily Volume Limit | Total Initial Spend (₹).
-> * **The Reinvestment Loop:** In a separate bulleted section strictly *below* the table, mathematically explain how Day 1 and Day 2 profits are dynamically reinvested to scale inventory for the Day 5-7 peak.
->
-> ### PHASE 3: Crowd Control & The Hype Engine (Adopt Persona: Behavioral Psychologist)
-> Weaponize the 45-minute peak lunch rush bottleneck. Assume a single service window.
-> * **Scarcity Model:** Outline a psychological FOMO strategy (e.g., limited daily "drops" where only 50 wraps are available at exactly 1:15 PM).
-> * **Frictionless Ordering:** Design a high-speed, zero-cost queuing system (e.g., color-coded tokens for exact UPI payments or a WhatsApp fast-lane) that eliminates line fatigue.
->
-> ### PHASE 4: The 7-Day Escalation Protocol (Adopt Persona: Disruptive Food-Tech Founder)
-> Provide a high-energy, authoritative day-by-day roadmap.
-> * **Day 1-2:** The Hook (Taste-testing and aggressive word-of-mouth).
-> * **Day 3-5:** The Scale (Optimizing the prep-line to handle maximum throughput).
-> * **Day 6-7:** The Cash Out (Profit maximization and aggressive inventory clearance for zero waste).
->
-> **Output Rules:** Use high-energy, authoritative language. Employ bold headers, concise bullet points, and absolutely zero generic cafeteria advice. Think like a founder executing a hostile takeover.
-
-## Detailed Parameter Breakdown
-
-### 1. Prompt Clarity: 80 / 100
-
-| Criterion | Score | Assessment |
-|---|---:|---|
-| Role & Persona Definition | 17 / 20 | Four phases assign distinct perspectives: “Viral Street-Food Chef,” “Ruthless Startup CFO,” “Behavioral Psychologist,” and “Disruptive Food-Tech Founder.” Their expertise is evocative but not operationally defined. |
-| Task Specificity & Negative Constraints | 20 / 25 | Exact product count, product concepts, unit costs, prep-time ceiling, budget split, and seven-day timeline are specified. Negative boundaries beyond “zero generic cafeteria advice” are limited. |
-| Instruction Structure & Delimiters | 18 / 20 | Four labeled phases and bullets make deliverables easy to locate. The budget table has required columns, but no dedicated assumptions or calculation definitions are requested. |
-| Tone, Style & Target Audience | 13 / 15 | “High-energy, authoritative” and “stressed tech and AI students” establish a strong voice and audience. Reader expertise and acceptable level of hype are not bounded. |
-| Unambiguous Language | 12 / 20 | “Exactly ₹10,000,” “high-profit,” “maximum throughput,” and “zero waste” sound precise but lack measurable definitions. “Margin (%)” has multiple common definitions, and “under 3 minutes” does not say whether it means active assembly or order-to-handoff time. |
-
-**Strengths:** “limited to exactly 3” and “using a strict ₹10,000 micro-budget” are crisp constraints. Phase headings make the required sequence explicit.
-
-**Gaps:** “Allocate exactly ₹8,000 to initial stock” does not state how to express inventory quantities or reconcile each row to that sum. “Maximum throughput” has no numerical service capacity target.
-
-### 2. Output Quality & Schema Compliance: 39 / 100
-
-| Criterion | Score | Assessment |
-|---|---:|---|
-| Output Format & Schema Enforcement | 22 / 30 | A Markdown budget table with named columns, separate reinvestment bullets, bold headers, and concise bullets are required. No required day-by-day fields, calculation notation, or final consistency check is defined. |
-| Few-Shot Examples & In-Context Demonstrations | 0 / 25 | The prompt gives illustrative tactics, such as a 1:15 PM wrap drop, but no input/output example that demonstrates the desired full answer or calculation style. |
-| Edge Cases & Fallback Instructions | 9 / 25 | It includes scenario assumptions (two-person team and single service window), but no instruction for infeasible prep or rush targets, missing data, weak demand, unsold perishables, or payment-channel limitations. |
-| Factuality & Hallucination Prevention | 8 / 20 | The three raw costs are explicitly labeled assumptions. There is no broader rule to distinguish assumptions from facts, avoid unsupported demand claims, or flag that real costs and local requirements need verification. |
-
-**Strengths:** Product costs and operating assumptions are supplied instead of leaving the entire plan unconstrained. Specific output elements (name, ingredients, prep time, hook) help drive useful menu descriptions.
-
-**Gaps:** The requested “Day 1 and Day 2 profits” cannot be calculated uniquely without selling prices, units sold, and treatment of the ₹2,000 hype spend. The prompt also does not distinguish revenue, gross profit, and cash available for restocking.
-
-### 3. Efficiency & Token Economy: 30 / 50
-
-| Criterion | Score | Assessment |
-|---|---:|---|
-| Conciseness & Fluff Elimination | 10 / 15 | Most text sets a task or constraint, but repeated persona labels and phrases such as “killer,” “weaponize,” and “hostile takeover” spend tokens on voice rather than execution detail. |
-| Token Economy & Context Footprint | 11 / 15 | The four-phase structure is information-dense. Some evocative instructions duplicate the final tone directive, while essential finance definitions are missing. |
-| Dynamic Parameterization | 1 / 10 | Costs and timeline are embedded as fixed values; no reusable fields are marked for location, opening days, existing equipment, or available staff. |
-| Signal-to-Noise Ratio | 8 / 10 | Required products, costs, phases, and deliverables are visible and prioritized. High-energy wording competes slightly with the exact operational requirements. |
-
-## Actionable Recommendations
-
-1. Define margin as `(selling price - raw cost) / selling price × 100` and state whether the result is gross margin before overhead.
-2. Require a quantity per product and show unit cost × quantity = initial stock spend; verify the three product totals equal ₹8,000 and the hype fund equals ₹2,000.
-3. Specify an auditable sales scenario for Day 1 and Day 2. Separate revenue, cost of goods sold, operating expenses, profit, and cash reinvested; label any demand or sell-through figures as assumptions.
-4. Clarify whether the three-minute prep target is active preparation or order-to-handoff time, and request a realistic capacity calculation for a 45-minute rush and one service window.
-5. Add fallback and risk instructions for infeasible throughput, low demand, unsold perishables, and assumptions that need local validation.
-6. Keep the requested energetic voice, but prohibit coercive, deceptive, or unsafe tactics and require local food-safety, allergen, and payment-process compliance to be verified rather than invented.
-
-## Optimized Prompt Rewrite (Production-Ready)
+### Prompt text evaluated
 
 ```text
 <role>
-You are a practical food-service launch planner combining menu development, small-business finance, queue operations, and marketing. Build an energetic but feasible seven-day plan for a college canteen serving tech and AI students.
+Persona 1 — Viral Street-Food Chef (owns Phase 1): 5+ years running high-turnover street-food stalls; expert in sub-3-minute batch prep engineered for Gen-Z food trends.
+Persona 2 — Ruthless Startup CFO (owns Phase 2): ex-VC analyst obsessed with unit economics and exact rupee reconciliation.
+Persona 3 — Behavioral Psychologist (owns Phase 3): specializes in ethical scarcity/FOMO mechanics and queue psychology.
+Persona 4 — Disruptive Food-Tech Founder (owns Phase 4): has scaled 3 campus pop-ups; speaks in decisive, dated action items.
+
+Never merge personas, skip a phase, reorder phases, or narrate persona-switching ("Now as the CFO...") — just execute in that voice.
 </role>
 
-<fixed_context>
-Budget: ₹10,000 total.
-Initial stock allocation: exactly ₹8,000.
-Promotion allocation: exactly ₹2,000 (the "Hype Fund").
-Team: two people. Service: one window. Peak lunch period: 45 minutes.
-Product raw costs per sellable unit, treated as supplied assumptions:
-- Chilli Potato bowl: ₹20
-- Paneer Dosa fusion wrap: ₹30
-- Iced mocktail or coffee: ₹15
-Timeline: seven days.
-</fixed_context>
+<variables>
+Use these; if the user supplies a value, override the default. If a variable has no default and is not supplied, do NOT invent one — output "MISSING INPUT: <variable_name>" for that line and continue with the rest of the plan.
+
+{{institution_name}}      = "the college"                  (default)
+{{target_audience}}       = "stressed tech and AI students" (default)
+{{total_budget_inr}}      = 10000   (default; integer > 0)
+{{stock_allocation_inr}}  = 8000    (default; must equal total_budget_inr - hype_fund_inr, else flag "BUDGET MISMATCH")
+{{hype_fund_inr}}         = 2000    (default)
+{{team_size}}             = 2       (default; integer >= 1)
+{{peak_window_minutes}}   = 45      (default)
+{{timeline_days}}         = 7       (default; integer >= 3)
+{{product_list}}          = [
+  {name: "Chilli Potato Bowl", raw_cost_inr: 20},
+  {name: "Paneer Dosa Wrap", raw_cost_inr: 30},
+  {name: "Iced Mocktail/Coffee", raw_cost_inr: 15}
+]  (default; if supplied, must contain >=3 items, each with name + raw_cost_inr > 0)
+</variables>
+
+<grounding_rules>
+- Every number in Phase 2 must trace to a variable above or to an explicitly labeled "ASSUMPTION:" line with its own justification. Never state a demand figure, sell-through rate, or profit number as fact without that label.
+- Margin is defined once, used everywhere: margin_% = (selling_price - raw_cost) / selling_price x 100. Never call it "markup" or "net profit."
+- If total_budget_inr, stock_allocation_inr, and hype_fund_inr are mutually inconsistent, stop Phase 2 math, print "BUDGET MISMATCH: <the conflict>", and proceed using stock_allocation_inr + hype_fund_inr as the effective total.
+</grounding_rules>
 
 <task>
-Create the plan in four numbered phases and in this order.
+## Phase 1 — Drop Culture Scarcity Menu
+Design exactly len(product_list) items (minimum 3), one per entry in {{product_list}}.
+For each item output this exact schema:
+- **Name:**
+- **Core Ingredients:**
+- **Active Prep Time:** (must be < 3 min per unit for {{team_size}} people; if infeasible, state "PREP INFEASIBLE AT {{team_size}}" and give the minimum feasible team size instead of silently changing the number)
+- **Craving Hook:** (1 sentence, tied to {{target_audience}}, no generic claims like "everyone will love it")
 
-1. MENU: Propose exactly three items, one based on each supplied product. For each, give a catchy name, core ingredients, estimated active prep time, and a brief appeal to students. Keep active prep under three minutes per item for a two-person team; state any batch-prep assumption. Do not imply that the three-minute target is order-to-handoff time unless the workflow supports it.
+*Example (style demonstration, do not reuse verbatim):*
+- **Name:** Rage Quit Bowl
+- **Core Ingredients:** fried potato, chilli-garlic glaze, spring onion
+- **Active Prep Time:** 90 sec for 2 people (par-fried batch, glazed to order)
+- **Craving Hook:** Assignment due in 10 minutes — this is faster than reheating leftovers.
 
-2. BUDGET AND REINVESTMENT: Provide a Markdown table with these columns: Item/Expense, Raw Cost per Unit (₹), Selling Price (₹), Gross Margin (%), Initial Quantity, Daily Volume Limit, Initial Spend (₹). Include all three stock items and a Hype Fund row. For the fund row, use N/A for per-unit fields. Include a total row. Choose integer quantities and selling prices so product inventory totals exactly ₹8,000, the Hype Fund is exactly ₹2,000, and the full budget is exactly ₹10,000. Show the arithmetic or a brief reconciliation beneath the table.
+Never include an item not derived from {{product_list}}. Never claim a prep time you haven't justified with a method (batching, pre-prep, etc.).
 
-Define gross margin as (selling price - raw cost) / selling price × 100, rounded to one decimal place. This is before labor, utilities, spoilage, and other overhead. Do not call it markup or net profit.
+## Phase 2 — Micro-Economy
+Output one Markdown table with exactly these columns, in this order:
+`Item/Expense | Raw Cost/Unit (INR) | Selling Price (INR) | Quantity | Margin (%) | Daily Volume Limit | Total Spend (INR)`
+- One row per product, one row for "Hype Fund" (use N/A for per-unit fields), one **Total** row.
+- Quantity x Raw Cost per row must sum to exactly {{stock_allocation_inr}}; the Hype Fund row must equal {{hype_fund_inr}}; the Total row must equal {{total_budget_inr}}. If it doesn't reconcile, print "RECONCILIATION FAILED" with the delta instead of forcing a match.
 
-Then show a separate Day 1 and Day 2 worked example. State assumed units sold and any additional cash expenses; label them as assumptions, not facts. For each day show revenue, cost of units sold, gross profit, cash expenses, net operating profit, and amount available/reinvested in stock. Do not count inventory purchases twice. Explain how the resulting cash supports Days 3-7, and flag if the plan depends on selling all available stock.
+Below the table, a worked Day 1-Day 2 example:
+- State assumed units sold per item (label as "ASSUMPTION:").
+- Show Revenue -> COGS -> Gross Profit -> Cash Reinvested, per grounding_rules.
+- If assumed sell-through would leave zero cash for Day 3 restocking, state that explicitly — do not paper over it with optimism.
 
-3. RUSH AND ORDERING: Give a scarcity/drop schedule that is honest about actual quantities and availability. Design a zero-cost queue and payment flow for one service window. Estimate orders served in 45 minutes from the proposed workflow; show the assumed service rate and identify the bottleneck. Do not promise a throughput level the two-person team cannot support.
+## Phase 3 — Crowd Control & Hype Engine
+- **Scarcity Model:** a drop schedule fitting inside {{peak_window_minutes}}, with a stated quantity and time (e.g., "50 units at [time]"). Never propose fake scarcity (claiming a shortage that isn't real) or countdown pressure with no basis.
+- **Frictionless Ordering:** a zero-cost queue/payment flow for {{team_size}} staff. Include an estimated units-served-per-window figure with the service-rate assumption shown, and name the bottleneck resource.
 
-4. SEVEN-DAY ROADMAP: Give one concise entry for each day. Cover taste testing and feedback (Days 1-2), measured workflow adjustments and scaling (Days 3-5), then demand-led inventory and waste control (Days 6-7). Include a measurable action or decision signal each day.
+## Phase 4 — {{timeline_days}}-Day Roadmap
+One dated line per day (Day 1, Day 2, ... Day {{timeline_days}}), each ending in one measurable signal (a number, decision, or go/no-go check) — not a vague goal like "build momentum."
+
 </task>
 
-<constraints>
-- Keep the tone energetic, direct, and founder-minded; use bold phase headings and concise bullets.
-- Avoid generic cafeteria advice, fabricated market statistics, and guaranteed profit or virality claims.
-- Distinguish supplied facts from assumptions. If a calculation needs unavailable information, state the assumption and show its effect.
-- Do not recommend deceptive scarcity, coercive marketing, unsafe food handling, or noncompliant payment practices. Note that local food-safety, allergen, licensing, and payment requirements must be checked; do not invent rules.
-- Minimize waste: use conservative replenishment and a clear response to unsold perishable stock.
-- Finish with a compact consistency check confirming the item count, budget totals, margin formula, and seven-day coverage.
-</constraints>
+<edge_cases>
+- Any {{product_list}} entry missing raw_cost_inr -> skip that item, note "SKIPPED: <name> — missing raw_cost_inr," continue with the rest.
+- {{timeline_days}} < 3 -> refuse to compress Phase 4 into fewer beats; state the minimum viable timeline instead.
+- Contradictory instructions (e.g., a supplied total_budget_inr that conflicts with stock+hype) -> resolved per grounding_rules, never silently averaged or guessed.
+- If unsold perishable stock is implied by the Day 1–2 example, Phase 4's Day 6–7 entries must address disposal/clearance explicitly.
+</edge_cases>
+
+<style>
+Voice: high-energy, imperative, second person ("You will..."), bold headers, bullets over paragraphs.
+Forbidden: "please," "kindly," hedging ("might," "could potentially"), unexplained superlatives ("game-changing," "revolutionary") without a stated mechanism.
+Reading level: assumes a college founder — define margin inline once, no unexplained finance jargon elsewhere.
+</style>
+
+<final_check>
+End with a "## Consistency Check" section confirming: item count matches product_list, all three budget totals reconcile (or state the mismatch), margin formula used consistently, and every day in the timeline has a measurable signal.
+</final_check>
 ```
+
+## 4. Detailed Criterion Evaluations
+
+### 4.1 Prompt Clarity (Awarded: 94 / 100)
+
+- **Role & Persona Definition:** 19 / 20
+- **Task Specificity & Negative Constraints:** 24 / 25
+- **Instruction Structure & Delimiters:** 20 / 20
+- **Tone, Style & Target Audience:** 14 / 15
+- **Unambiguous Language:** 17 / 20
+
+**Detailed analysis:**
+
+- **Strengths:** The role block gives each phase an owner and operational expertise, then explicitly says “Never merge personas, skip a phase, reorder phases.” The variables and task blocks make outputs deterministic, including “exactly `len(product_list)` items,” exact table columns, and one measurable line per day. XML-like tags cleanly separate fixed instructions from dynamic values.
+- **Gaps:** “Selling Price” has no explicit validation rule or required rounding/currency format. `peak_window_minutes` has no positive-integer validation. “For that line” in the missing-input rule is ambiguous because some missing variables affect multiple phases. The stylized personas are clear in voice but not always necessary for execution.
+
+### 4.2 Output Quality & Schema Compliance (Awarded: 85 / 100)
+
+- **Output Format & Schema Enforcement:** 28 / 30
+- **Few-Shot Examples & In-Context Demos:** 14 / 25
+- **Edge Cases & Fallbacks:** 23 / 25
+- **Factuality & Hallucination Prevention:** 20 / 20
+
+**Detailed analysis:**
+
+- **Strengths:** Phase 1 has an exact per-item schema; Phase 2 fixes column order and row types; the prompt requires a reconciliation failure message instead of forced arithmetic. “Every number in Phase 2 must trace to a variable ... or ... `ASSUMPTION:`” is a strong factuality control. The edge-case block handles missing costs, short timelines, contradictions, and perishables.
+- **Format risks:** The “Rage Quit Bowl” example demonstrates style but not the complete final response, table arithmetic, or a failed reconciliation. There is no example showing how skipped products affect item count or how missing defaults propagate. The zero-cost queue/payment requirement does not require payment or food-safety assumptions to be explicitly marked for local verification.
+
+### 4.3 Efficiency & Token Economy (Awarded: 41 / 50)
+
+- **Conciseness & Fluff Elimination:** 12 / 15
+- **Token Economy & Context Footprint:** 12 / 15
+- **Dynamic Parameterization:** 10 / 10
+- **Signal-to-Noise Ratio:** 7 / 10
+
+**Detailed analysis:**
+
+- **Efficiency observations:** The prompt is highly parameterized and puts constraints next to the phase where they matter. Defaults make it runnable without additional setup, while placeholders make reuse straightforward.
+- **Token waste / redundancy:** “Ruthless,” “disruptive,” “viral,” “drop culture,” and “hype engine” add flavor but do not change the required output. Budget conflict behavior is described in both `<grounding_rules>` and `<edge_cases>`, and the final check repeats several earlier requirements.
+
+## 5. Prioritized Recommendations
+
+1. **Add two compact demonstrations:** Include one complete happy-path output excerpt with the financial table and one edge-case excerpt showing a skipped product or budget mismatch.
+2. **Centralize input validation:** Define valid domains for every numeric variable, selling price, product object, and `product_list` length, then specify one `INVALID INPUT` response pattern.
+3. **Clarify operational compliance:** Require assumptions about payment availability, allergen disclosure, food holding temperatures, and licensing to be labeled for local verification.
+4. **Reduce repeated rules:** Keep canonical arithmetic and contradiction behavior in `<grounding_rules>` and make `<edge_cases>` reference it while adding only distinct cases.
+
+## 6. Optimized & Production-Ready Prompt Rewrite
+
+```text
+<role>
+You are a four-discipline launch planner. Execute Phases 1-4 in order, with each phase using its assigned voice. Never merge personas, skip a phase, reorder phases, or narrate persona changes.
+</role>
+
+<inputs>
+Use supplied values over defaults. Validate every numeric input before calculating:
+- institution_name: "the college"
+- target_audience: "stressed tech and AI students"
+- total_budget_inr: 10000, integer > 0
+- stock_allocation_inr: 8000, integer >= 0
+- hype_fund_inr: 2000, integer >= 0
+- team_size: 2, integer >= 1
+- peak_window_minutes: 45, integer > 0
+- timeline_days: 7, integer >= 3
+- product_list: at least 3 objects, each with a name and raw_cost_inr > 0
+
+For invalid or missing values, print `INVALID INPUT: <field> — <reason>` or `MISSING INPUT: <field>`, then continue only where valid. Never invent replacements.
+</inputs>
+
+<grounding>
+- Treat supplied costs and all demand, sell-through, service-rate, and waste figures as assumptions unless provided as facts. Prefix each model-generated figure with `ASSUMPTION:` and justify it.
+- Define gross margin once: (selling_price - raw_cost) / selling_price * 100, rounded to one decimal place. It is before labor, utilities, spoilage, and overhead; never call it markup or net profit.
+- If total_budget_inr != stock_allocation_inr + hype_fund_inr, print `BUDGET MISMATCH: <conflict>`, stop Phase 2 arithmetic, and report the effective total as stock allocation plus hype fund.
+</grounding>
+
+<phases>
+1. MENU. Create exactly one item per valid product. Output Name, Core Ingredients, Active Prep Time, and Craving Hook. Keep active prep under three minutes for team_size people; show the batch-prep method. If infeasible, print `PREP INFEASIBLE AT <team_size>` and give the minimum feasible team size. Do not add products.
+
+2. MICRO-ECONOMY. Output one Markdown table with exactly:
+Item/Expense | Raw Cost/Unit (INR) | Selling Price (INR) | Quantity | Margin (%) | Daily Volume Limit | Total Spend (INR)
+Include one row per valid product, a Hype Fund row, and a Total row. Choose integer quantities and prices. Product spend must equal stock_allocation_inr; the Hype Fund must equal hype_fund_inr. If reconciliation fails, print `RECONCILIATION FAILED: <delta>` and show actual totals.
+
+Below the table, show an ASSUMPTION-labeled Day 1 and Day 2 example with units sold, revenue, COGS, gross profit, cash expenses, net operating profit, and cash reinvested. Do not count inventory purchases twice. Flag dependence on full sell-through or zero cash for later restocking.
+
+3. CROWD CONTROL. Give an honest drop schedule inside peak_window_minutes with real quantities and times. Provide a zero-cost queue/payment flow for team_size staff, calculate units served from an ASSUMPTION-labeled service rate, and name the bottleneck. Do not recommend deceptive scarcity, coercion, unsafe handling, or noncompliant payments.
+
+4. ROADMAP. Provide one dated line for every day from Day 1 through Day timeline_days. End every line with a measurable signal. Address unsold perishable stock explicitly when relevant.
+</phases>
+
+<compliance_and_style>
+Use energetic, direct second person, bold phase headings, and concise bullets. Avoid filler, unsupported claims, fabricated statistics, and guaranteed profit or virality. Mark food-safety, allergen, licensing, and payment requirements as locally verified assumptions; do not invent regulations.
+</compliance_and_style>
+
+<final_check>
+End with `## Consistency Check` confirming valid item count, budget totals or mismatch, the margin formula, and measurable coverage of every timeline day.
+</final_check>
+```
+
+---
+*Report generated by `prompt-eval` skill.*
